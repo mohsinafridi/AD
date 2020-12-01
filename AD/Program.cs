@@ -9,6 +9,7 @@ namespace AD
         static void Main(string[] args)
         {
             var users = ADUsers("asim.");
+            
         }
         public static List<string> ADUsers(string filter)
         {
@@ -19,7 +20,7 @@ namespace AD
 
            DirectoryEntry de = new DirectoryEntry("LDAP://systemsltd.local");
 
-            var ds = new DirectorySearcher(de, $"(&(objectClass=user)(anr={filter}))",new[] { "givenName", }) //attributes to load
+            var ds = new DirectorySearcher(de, $"(&(objectClass=user)(anr={filter}))", new[] { "cn" }) //attributes to load
             {
                 SizeLimit = 100
             };
@@ -29,7 +30,9 @@ namespace AD
             {
                 foreach (SearchResult result in results)
                 {
-                    users.Add($"{result.Properties["givenName"][0]} ");
+                    users.Add($"{result.Properties["cn"][0]} ");
+                    var user = $"{result.Properties["cn"][0]}";
+                    Console.WriteLine(user);
                 }
             }           
             return users;
