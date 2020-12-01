@@ -8,7 +8,7 @@ namespace AD
     {
         static void Main(string[] args)
         {
-            var users = ADUsers("mohsin.azam@systemsltd.com");
+            var users = ADUsers("asim.");
         }
         public static List<string> ADUsers(string filter)
         {
@@ -17,9 +17,9 @@ namespace AD
             List<string> users = new List<string>();
 
 
-           DirectoryEntry de = new DirectoryEntry("LDAP://systemsltd.com");
+           DirectoryEntry de = new DirectoryEntry("LDAP://systemsltd.local");
 
-            var ds = new DirectorySearcher(de, $"(&(objectClass=user)(anr={filter}))",new[] { "givenName", "sn", "mail" }) //attributes to load
+            var ds = new DirectorySearcher(de, $"(&(objectClass=user)(anr={filter}))",new[] { "givenName", }) //attributes to load
             {
                 SizeLimit = 100
             };
@@ -29,7 +29,7 @@ namespace AD
             {
                 foreach (SearchResult result in results)
                 {
-                    users.Add($"{result.Properties["givenName"][0]} {result.Properties["sn"][0]} {result.Properties["mail"][0]}");
+                    users.Add($"{result.Properties["givenName"][0]} ");
                 }
             }           
             return users;
